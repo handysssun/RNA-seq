@@ -8,6 +8,8 @@
 
 3. 功能富集分析
 
+[使用clusterProfiler包进行GO和KEGG富集分析](https://github.com/handysssun/RNA-seq/blob/main/function_enrichment/clusterProfiler.R)
+
 4. 富集可视化
 
 5. GSEA
