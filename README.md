@@ -6,6 +6,12 @@
 
 2. limma、edgR、DESeq2差异表达分析的区别
 
+[limma](https://github.com/handysssun/RNA-seq/blob/main/DEGs/limma.R)
+
+[DESeq2](https://github.com/handysssun/RNA-seq/blob/main/DEGs/DESeq2.R)
+
+[edgeR](https://github.com/handysssun/RNA-seq/blob/main/DEGs/edgeR.R)
+
 3. 功能富集分析
 
 [使用clusterProfiler包进行GO和KEGG富集分析](https://github.com/handysssun/RNA-seq/blob/main/function_enrichment/clusterProfiler.R)
