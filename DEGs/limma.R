@@ -96,8 +96,9 @@ expr <- read.csv("expr_sc.csv", header = TRUE,row.names = 1)
 metadata  <- read.csv("sample_info.csv", header = TRUE,row.names = 1)
 
 # metadata
-metadata <- data.frame(cbind(colnames(c1),rep(c("Control","Treatment"),each = 3)))
-colnames(metadata) <- c("sample","group")
+metadata <- data.frame(rep(c("Control","Treatment"),each = 3))
+colnames(metadata) <- "group"
+rownames(metadata) <- colnames(c1)
 metadata$group <- factor(metadata$group)
 
 # 创建设计矩阵,group列需要为因子类型
