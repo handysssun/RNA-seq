@@ -95,6 +95,11 @@ expr <- read.csv("expr_sc.csv", header = TRUE,row.names = 1)
 # 表达矩阵的列名作为样本信息的行名
 metadata  <- read.csv("sample_info.csv", header = TRUE,row.names = 1)
 
+# metadata
+metadata <- data.frame(cbind(colnames(c1),rep(c("Control","Treatment"),each = 3)))
+colnames(metadata) <- c("sample","group")
+metadata$group <- factor(metadata$group)
+
 # 创建设计矩阵,group列需要为因子类型
 design <- model.matrix(~0 + metadata$group)
 metadata$group <- factor(metadata$group, levels = c("Control", "Treatment"))
