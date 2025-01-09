@@ -6,11 +6,15 @@
 
 2. limma、edgR、DESeq2差异表达分析的区别
 
+2.1 差异分析
+
 [limma](https://github.com/handysssun/RNA-seq/blob/main/DEGs/limma.R)
 
 [DESeq2](https://github.com/handysssun/RNA-seq/blob/main/DEGs/DESeq2.R)
 
 [edgeR](https://github.com/handysssun/RNA-seq/blob/main/DEGs/edgeR.R)
+
+2.2 差异可视化
 
 3. 功能富集分析
 
