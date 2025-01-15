@@ -109,7 +109,7 @@ print(design)
 
 # 创建eSet,需要Biobase包，assayData需要是矩阵格式的
 pheno_data <- new("AnnotatedDataFrame", data = metadata)
-eset <- ExpressionSet(assayData = expr, phenoData = pheno_data)
+eset <- ExpressionSet(assayData = as.matrix(expr), phenoData = pheno_data)
 
 # 数据标准化（可选）
 eset <- normalizeBetweenArrays(eset)
