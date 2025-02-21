@@ -20,6 +20,8 @@
 
 [pHeatmap](https://github.com/handysssun/RNA-seq/blob/main/DEGs/pHeatmap.R)
 
+[histogram](https://github.com/handysssun/RNA-seq/blob/main/DEGs/histogram.R)
+
 3. 功能富集分析
 
 [使用clusterProfiler包进行GO和KEGG富集分析](https://github.com/handysssun/RNA-seq/blob/main/function_enrichment/clusterProfiler.R)
