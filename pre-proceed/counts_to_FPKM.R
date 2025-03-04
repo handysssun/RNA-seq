@@ -4,7 +4,7 @@
 ### 获取基因长度
 library(GenomicFeatures) #加载R包
 ## 1.读取GTF文件
-txdb <- makeTxDbFromGFF("genomic.gtf") #TxDb：R语言中用于储存gtf文件的一种格式
+txdb <- makeTxDbFromGFF("E:/R_script/genomic.gtf") #TxDb：R语言中用于储存gtf文件的一种格式
 ## 2.提取外显子信息
 exonic <- exonsBy(txdb, by="gene") #可以提取基因外显子部分，计算counts数据比对的为基因外显子序列
 ## 3.外显子长度求和
