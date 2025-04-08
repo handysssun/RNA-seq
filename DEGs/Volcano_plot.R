@@ -29,7 +29,7 @@ ggplot(degdata,aes(log2FoldChange,-log10(padj)))+
   geom_hline(yintercept = -log10(0.05), linetype = "dashed")+
   theme_bw()+
   # 设置点的颜色
-  scale_color_manual(values = c('red','grey','blue'))+
+  scale_color_manual(values = c('blue', 'grey', 'red'))+
   # 设置标签注释
   # geom_text_repel(data = labeldata[1:10,], 
   #                 aes(label = label,color=status),
