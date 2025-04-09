@@ -26,6 +26,8 @@
 
 [使用clusterProfiler包进行GO和KEGG富集分析](https://github.com/handysssun/RNA-seq/blob/main/function_enrichment/clusterProfiler.R)
 
+[也可以使用DAVID在线富集后使用R进行可视化](https://github.com/handysssun/RNA-seq/blob/main/function_enrichment/DAVID_annotion_visualization.R)
+
 4. 富集可视化
 
 5. GSEA
