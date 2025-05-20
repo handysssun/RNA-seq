@@ -92,8 +92,8 @@ ekegg <- enrichKEGG(gene = gene$ENTREZID, #基因列表文件中的基因名称
 					keyType = 'kegg', #KEGG 富集
 					organism = "hsa",#例如，hsa 代表人类，其它物种更改这行即可
 					pAdjustMethod = "BH",
-					pvalueCutoff = 0.1, #指定 p 值阈值（可指定 1 以输出全部）
-					qvalueCutoff = 0.2) #指定 q 值阈值（可指定 1 以输出全部）
+					pvalueCutoff = 0.05, #指定 p 值阈值（可指定 1 以输出全部）
+					qvalueCutoff = 0.05) #指定 q 值阈值（可指定 1 以输出全部）
 	
 ```
 
