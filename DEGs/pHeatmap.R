@@ -105,6 +105,27 @@ old <- rownames(plot_data)[p$tree_row$order]#最初热图按聚类结果排序�
 manual_order = old[c(44:101,1:43)]#修改后的镜像顺序
 dend = reorder(as.dendrogram(hclust_1), wts=order(match(manual_order, rownames(exprTable))))# 重新生成聚类文件
 row_cluster <- as.hclust(dend)
+
+# 将数据进行分区聚类
+# 切分
+group1 <- plot_data[1:52, ]     # 第一部分
+group2 <- plot_data[53:554, ]   # 第二部分
+# 分别进行聚类（层次聚类为例）
+# 使用欧氏距离 + 完全链接
+hc1 <- hclust(dist(group1), method = "complete")
+hc2 <- hclust(dist(group2), method = "complete")
+# 结合聚类结果排列行顺序
+# 获取聚类后的行顺序
+order1 <- hc1$order
+order2 <- hc2$order
+
+# 合并排序
+new_order <- c(rownames(group1)[order1], rownames(group2)[order2])
+
+# 按新顺序重新排列原数据
+plot_data_ordered <- plot_data[new_order, ]
+
+
 pheatmap(plot_data,cluster_cols = FALSE,
          color = colorRampPalette(colors = c("blue","white","red"))(length(bk)),
          breaks = bk,
