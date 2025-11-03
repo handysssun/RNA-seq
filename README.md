@@ -35,3 +35,7 @@
 5. GSEA
 
 6. 共表达及网络
+
+7. 相关性分析
+
+[对两个基因进行相关性分析并绘制散点+回归线图](https://github.com/handysssun/RNA-seq/blob/main/cor/cor_plot.R)
