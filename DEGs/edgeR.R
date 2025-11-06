@@ -4,7 +4,7 @@ rm(list = ls())
 # 导入必要的R包
 library(edgeR)
 
-# 示例数据---------------
+# 示例数据
 rc <- matrix(runif(30), nrow=5)
 rownames(rc) <- paste0("gene",1:5)
 colnames(rc) <- c(paste0('ctrl',1:3),paste0('treat',1:3))
@@ -15,7 +15,9 @@ rownames(metadata) <- colnames(rc)
 metadata$group <- factor(metadata$group, levels = c("ctrl", "treat"))# 分组需要转换为因子型
 metadata
 
-# 创建DGEList对象------------------
+# 整理数据
+
+# 创建DGEList对象
 y <- DGEList(counts = rc, group = metadata$group)
 
 # 过滤低表达基因
@@ -44,9 +46,10 @@ top_tags <- topTags(lrt, n = Inf)
 write.csv(top_tags, file = "edgeR_result.csv",quote = FALSE,row.names = TRUE)
 
 # 提取差异表达基因的详细信息
-de_genes <- topTags(lrt, n = Inf)$table
+de_result <- topTags(lrt, n = Inf)$table
+save(de_result,file = "de_result.Rdata")
 
-# 转换-----------------
+# 转换
 library(clusterProfiler)
 exchange <- bitr(rownames(de_genes), fromType = 'ENSEMBL', 
                  toType = 'SYMBOL', 
@@ -80,5 +83,6 @@ annotated_genes <- select(org.Hs.eg.db, keys = rownames(significant_genes), colu
 # 功能富集分析
 library(clusterProfiler)
 ego <- enrichGO(gene = annotated_genes$ENTREZID, OrgDb = org.Hs.eg.db, keyType = "ENTREZID", ont = "BP", pAdjustMethod = "BH", pvalueCutoff = 0.01)
+
 
 
