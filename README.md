@@ -2,9 +2,11 @@
 
 ## RNA-seq数据的分析流程
 
-1. counts、fpkm、rpkm、tmp的区别与分析方法
+### 1. counts、fpkm、rpkm、tmp的区别与分析方法
 
-2. limma、edgR、DESeq2差异表达分析的区别
+[counts转换为FPKM](https://github.com/handysssun/RNA-seq/blob/main/pre-proceed/counts_to_FPKM.R)
+
+### 2. limma、edgR、DESeq2差异表达分析的区别
 
 2.1 差异分析
 
