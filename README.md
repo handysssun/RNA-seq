@@ -10,7 +10,7 @@
 
 2.1 差异分析
 
-[limma](https://github.com/handysssun/RNA-seq/blob/main/DEGs/limma.R)
+[limma](https://github.com/handysssun/RNA-seq/blob/main/DEGs/limma.R) [limma两组](https://github.com/handysssun/RNA-seq/blob/main/DEGs/limma_two_groups.Rmd)
 
 [DESeq2](https://github.com/handysssun/RNA-seq/blob/main/DEGs/DESeq2.R)
 
