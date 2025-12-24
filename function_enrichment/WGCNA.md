@@ -125,7 +125,7 @@ WGCNA 的第一步是选择一个适当的软阈值，以确保网络是无尺�
 选择一个 `R^2` 接近 0.9 的阈值作为合适的 `power`。
 
 ```{R}
-powers <- c(1:20)
+powers = c(c(1:10), seq(from = 12, to=20, by=2))
 sft <- pickSoftThreshold(expr, powerVector = powers, verbose = 5)
 # 绘制软阈值与网络拓扑的关系图
 plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2], 
@@ -300,3 +300,4 @@ for (m in names(moduleGenes)) {
 ---
 
 这个过程涵盖了 WGCNA 分析的基本流程，但也可以根据具体的数据和需求进行适当调整。每一步的选择和参数调整都需要根据你的数据进行优化。
+
