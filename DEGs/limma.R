@@ -139,7 +139,75 @@ results_df <- merge(expr,results,by.x = 0,by.y = 0)
 write.csv(results_df, file = paste0(group1,"_VS_",group2,"_DE_results.csv"),
           quote = FALSE, row.names = TRUE)
 
+# 去除地表达基因----------------------------------------------------------------------------------
+library(limma)
+
+# 1. 数据预处理
+# 假设你的 FPKM 矩阵叫 fpkm_matrix
+# 过滤掉在超过一半的样本中表达量都极低 (比如 < 1) 的基因
+keep <- rowSums(fpkm_matrix > 1) >= (ncol(fpkm_matrix) / 2)
+fpkm_filtered <- fpkm_matrix[keep, ]
+
+# 2. Log2 转换 (这是 limma 处理连续数据的核心需求)
+# 加 1 是为了防止对 0 取 log 导致产生无穷大
+exprs_data <- log2(fpkm_filtered + 1)
+
+# 3. 创建设计矩阵 (假设同前)
+group_list <- factor(c(rep("Control", 3), rep("Treatment", 3)))
+design <- model.matrix(~0 + group_list)
+colnames(design) <- levels(group_list)
+
+# 4. 差异分析
+fit <- lmFit(exprs_data, design)
+contrast.matrix <- makeContrasts(Treatment - Control, levels = design)
+fit2 <- contrasts.fit(fit, contrast.matrix)
+fit2 <- eBayes(fit2)
+
+# 5. 获取结果
+res <- topTable(fit2, coef = 1, n = Inf, adjust.method = "fdr")
 
 
 
+# 去除地表达基因和voom转换----------------------------------------------------------------------------------
+
+# 为什么需要 filterByExpr()?
+#在多重假设检验（FDR 校正）中，检验的次数越多，校正后的 P 值就越难显著。
+
+#作用：剔除那些“背景噪音”基因（比如在所有样本中 Count 都是 0 或 1 的基因）。
+
+#逻辑：它不仅看平均值，还会考虑你的分组。例如，如果一个基因只在处理组表达，而在对照组不表达，它会聪明地保留这个基因，因为它极可能是潜在的差异基因。
+
+#为什么需要 voom 转换?
+#limma 最初是为芯片数据设计的，芯片信号通常呈正态分布。而 RNA-seq 的原始 Count 数据符合负二项分布，且存在“均值-方差依赖”关系（表达量越低，噪音比例越高）。
+
+#作用：它计算每个观察值的精度权重。
+
+#可视化意义：当你运行 voom(..., plot=TRUE) 时，你会看到一条向下的曲线。
+
+#横轴：平均表达量。
+
+#纵轴：标准差。
+
+#voom 的目的就是让这条曲线变平，消除这种依赖性，让数据能够像芯片数据一样被线性模型处理。
+library(edgeR)
+library(limma)
+
+# 1. 创建 DGEList 对象
+dge <- DGEList(counts = counts)
+
+# 2. 使用 filterByExpr 过滤低表达基因
+# 它会自动根据样本分组情况，剔除在大多数样本中都不表达的基因
+keep <- filterByExpr(dge, design)
+dge <- dge[keep, , keep.lib.sizes=FALSE]
+
+# 3. 计算标准化因子 (TMM 标准化)
+dge <- calcNormFactors(dge)
+
+# 4. 使用 voom 进行转换
+# 这步将 count 转换为 log2-CPM，并计算权重以处理均值-方差关系
+v <- voom(dge, design, plot=TRUE)
+
+# 5. 随后即可进入 limma 拟合
+fit <- lmFit(v, design)
+# ... 接后续的 eBayes 步骤
 
