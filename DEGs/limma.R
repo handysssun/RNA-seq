@@ -95,15 +95,20 @@ expr <- read.csv("expr_sc.csv", header = TRUE,row.names = 1)
 # 表达矩阵的列名作为样本信息的行名
 metadata  <- read.csv("sample_info.csv", header = TRUE,row.names = 1)
 
+expr <- df1
+
+group1 <- "WT_C"
+group2 <- "KO_C"
+
 # metadata
-metadata <- data.frame(rep(c("Control","Treatment"),each = 3))
+metadata <- data.frame(rep(c(group1,group2),each = 3))
 colnames(metadata) <- "group"
-rownames(metadata) <- colnames(c1)
+rownames(metadata) <- colnames(expr)
 metadata$group <- factor(metadata$group)
 
 # 创建设计矩阵,group列需要为因子类型
 design <- model.matrix(~0 + metadata$group)
-metadata$group <- factor(metadata$group, levels = c("Control", "Treatment"))
+metadata$group <- factor(metadata$group, levels = c(group1, group2))
 colnames(design) <- levels(metadata$group)
 print(design)
 
@@ -118,15 +123,22 @@ eset <- normalizeBetweenArrays(eset)
 fit <- lmFit(exprs(eset), design)
 
 # 创建比较矩阵
-contrast_matrix <- makeContrasts(Treatment - Control, levels = design)
+contrast_formula <- paste0(group2, " - ", group1)
+contrast_matrix <- makeContrasts(contrast_formula, levels = design)
 fit2 <- contrasts.fit(fit, contrast_matrix)
 # 贝叶斯检验
 fit2 <- eBayes(fit2)
 
 # 提取差异分析结果
 results <- topTable(fit2, adjust = "BH", number = Inf)
+
+# 合并表达矩阵和symbol
+results_df <- merge(expr,results,by.x = 0,by.y = 0)
+
 # print(head(results))
-write.csv(results, file = "differential_expression_results.csv", quote = FALSE, row.names = TRUE)
+write.csv(results_df, file = paste0(group1,"_VS_",group2,"_DE_results.csv"),
+          quote = FALSE, row.names = TRUE)
+
 
 
 
