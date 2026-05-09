@@ -31,7 +31,7 @@ ego <- enrichGO(gene_list,#GO富集分析
                 pvalueCutoff = p_cutoff,#设定p值阈值
                 qvalueCutoff = q_cutoff,#设定q值阈值
                 readable = T)
-write.csv(as.data.frame(ego),"clsuterprofiler_GO.csv",row.names = FALSE)
+# write.csv(as.data.frame(ego),"clsuterprofiler_GO.csv",row.names = FALSE)
 
 
 # KEGG富集分析
@@ -39,7 +39,13 @@ ekegg <- enrichKEGG(gene_list,
                     organism = KEGG_database,
                     pvalueCutoff = p_cutoff,
                     qvalueCutoff = q_cutoff)
-write.csv(as.data.frame(ekegg), "clsuterprofiler_KEGG.csv", row.names = FALSE)
+ekegg_readable <- setReadable(ekegg, 
+                           OrgDb = GO_database, 
+                           keyType = "ENTREZID")
+# write.csv(as.data.frame(ekegg), "clsuterprofiler_KEGG.csv", row.names = FALSE)
+write.xlsx(list("GO" = data.frame(ego),
+                "KEGG" = data.frame(ekegg_readable)),
+           file = "goKEGG_enrichment.xlsx")goKEGG_enrichment
 
 
 
