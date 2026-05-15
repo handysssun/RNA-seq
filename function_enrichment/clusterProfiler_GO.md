@@ -103,12 +103,17 @@ cluster Profiler可视化
 library(clusterProfiler)
 library(enrichplot)
 library(ggplot2)
+library(scales) # 需要加载 scales 包来处理标签
 
 # 绘制条形图
-barplot(ego, showCategory=10, title="GO Enrichment Analysis")
+barplot(ego, showCategory=10, title="GO Enrichment Analysis")+
+  scale_fill_continuous(low="red", high="blue", 
+                        labels = label_scientific(digits = 2)) # digits控制保留几位小数
 
 # 绘制气泡图
-dotplot(ego, showCategory=10, title="GO Enrichment Analysis")
+dotplot(ego, showCategory=10, title="GO Enrichment Analysis") +
+  scale_color_continuous(low="red", high="blue", 
+                         labels = label_scientific(digits = 2)) 
 ```
 
 分别绘制不同ont的图
